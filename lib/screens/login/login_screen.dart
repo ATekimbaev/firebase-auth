@@ -52,7 +52,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
+                          builder: (context) => HomeScreen(
+                                email: controllerEmail.text,
+                              )));
                 }
                 if (state is LoginBlocError) {
                   showDialog(

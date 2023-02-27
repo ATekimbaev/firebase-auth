@@ -1,3 +1,4 @@
+import 'package:firebase_app/screens/home_screen/bloc/get_candidates_data_bloc.dart';
 import 'package:firebase_app/screens/login/bloc/login_bloc_bloc.dart';
 import 'package:firebase_app/screens/registration/bloc/registration_bloc.dart';
 import 'package:firebase_app/screens/registration/registartion_screen.dart';
@@ -30,6 +31,10 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => LoginBlocBloc(
+                repo: RepositoryProvider.of<FireBaseAuthService>(context)),
+          ),
+          BlocProvider(
+            create: (context) => GetCandidatesDataBloc(
                 repo: RepositoryProvider.of<FireBaseAuthService>(context)),
           ),
         ],

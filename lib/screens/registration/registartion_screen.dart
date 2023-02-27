@@ -73,19 +73,24 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               listener: (context, state) {
                 if (state is RegistrationSucces) {
                   Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomeScreen(
+                        email: controllerEmail.text,
+                      ),
+                    ),
+                  );
                 }
                 if (state is RegistrationError) {
                   showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                            content: Text(
-                              state.errorText,
-                              style: const TextStyle(color: Colors.red),
-                            ),
-                          ));
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      content: Text(
+                        state.errorText,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  );
                 }
               },
               child: ElevatedButton(

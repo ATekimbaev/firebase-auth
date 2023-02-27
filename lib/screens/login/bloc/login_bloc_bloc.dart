@@ -10,6 +10,7 @@ class LoginBlocBloc extends Bloc<LoginBlocEvent, LoginBlocState> {
     on<SendLoginDataEvent>((event, emit) async {
       try {
         await repo.login(email: event.email, password: event.password);
+
         emit(LoginBlocSucces());
       } catch (e) {
         emit(
