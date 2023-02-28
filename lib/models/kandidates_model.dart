@@ -22,8 +22,8 @@ class Candidates {
     required this.voice,
     required this.name,
   });
-  late final int voice;
-  late final String name;
+  late int voice;
+  late String name;
 
   Candidates.fromJson(Map<String, dynamic> json) {
     voice = json['voice'];

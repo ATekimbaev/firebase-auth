@@ -9,9 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.email});
-
-  final String email;
+  const HomeScreen({
+    super.key,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -19,15 +19,52 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Candidates> candidates = [];
+  int newVoice = 0;
+  TextEditingController controllerName = TextEditingController();
 
   String _selectedCandidate = '';
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<GetCandidatesDataBloc>(context).add(GetDataEvent());
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: TextField(
+                controller: controllerName,
+                decoration: const InputDecoration(
+                  hintText: 'Введите имя',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    candidates.add(
+                      Candidates(voice: 0, name: controllerName.text),
+                    );
+                    BlocProvider.of<GetCandidatesDataBloc>(context).add(
+                      SendDataEvent(
+                        data: ListCandidates(candidates: candidates),
+                      ),
+                    );
+                    Navigator.pop(context);
+                    setState(() {});
+                  },
+                  child: const Text('Добавить'),
+                )
+              ],
+            ),
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
-        title: Text(widget.email),
+        title: Text('голосовать'),
       ),
       body: Center(
         child: Column(
@@ -54,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           value: state.data.candidates[index].name,
                           groupValue: _selectedCandidate,
                           onChanged: (val) {
+                            selectedIndex = index;
                             _selectedCandidate =
                                 state.data.candidates[index].name;
                             print(_selectedCandidate);
@@ -70,12 +108,17 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 25),
             ElevatedButton(
                 onPressed: () {
+                  print(candidates.map((e) => e.voice));
+                  candidates[selectedIndex].voice =
+                      candidates[selectedIndex].voice + 1;
                   BlocProvider.of<GetCandidatesDataBloc>(context).add(
                     SendDataEvent(
-                      data: ListCandidates(candidates: candidates),
+                      data: ListCandidates(
+                        candidates: candidates,
+                      ),
                     ),
                   );
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                       builder: (context) => ResultsScreen(model: candidates),

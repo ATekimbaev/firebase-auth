@@ -1,4 +1,5 @@
 import 'package:firebase_app/models/kandidates_model.dart';
+import 'package:firebase_app/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -32,6 +33,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Results'),
       ),
       body: Column(
@@ -49,11 +51,19 @@ class _ResultsScreenState extends State<ResultsScreen> {
                       value: widget.model[index].voice / summ,
                       minHeight: 10,
                     ),
-                    Text('${widget.model[index].voice / summ * 100}%')
+                    Text('${widget.model[index].voice / summ * 100}%'),
                   ],
                 ),
               );
             },
+          ),
+          const SizedBox(height: 25),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()));
+            },
+            child: const Text('Назад'),
           )
         ],
       ),

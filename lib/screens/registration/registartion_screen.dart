@@ -75,9 +75,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => HomeScreen(
-                        email: controllerEmail.text,
-                      ),
+                      builder: (context) => HomeScreen(),
                     ),
                   );
                 }

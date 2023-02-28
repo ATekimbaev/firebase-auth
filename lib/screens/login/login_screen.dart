@@ -49,12 +49,8 @@ class _LoginScreenState extends State<LoginScreen> {
             BlocListener<LoginBlocBloc, LoginBlocState>(
               listener: (context, state) {
                 if (state is LoginBlocSucces) {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => HomeScreen(
-                                email: controllerEmail.text,
-                              )));
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()));
                 }
                 if (state is LoginBlocError) {
                   showDialog(
